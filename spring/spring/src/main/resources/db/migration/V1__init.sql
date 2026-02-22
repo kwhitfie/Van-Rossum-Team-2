@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    created_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS breeds (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) UNIQUE NOT NULL,
+    image_url VARCHAR(500)
+);
+
+CREATE TABLE IF NOT EXISTS encounters (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    breed_name VARCHAR(100) NOT NULL,
+    dog_name VARCHAR(100),
+    area VARCHAR(100),
+    city VARCHAR(100),
+    country VARCHAR(100),
+    notes TEXT,
+    met_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS posts (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    breed_name VARCHAR(100) NOT NULL,
+    photo_url VARCHAR(500) NOT NULL,
+    caption TEXT,
+    is_public BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
